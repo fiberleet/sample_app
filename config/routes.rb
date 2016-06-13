@@ -16,13 +16,21 @@ Rails.application.routes.draw do
 
   delete 'logout'  => 'sessions#destroy'
 
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
 
   resources :account_activations, only: [:edit]
 
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
-  resources :microposts,          only: [:create, :destroy]  # The priority is based upon order of creation: first created -> highest priority.
+  resources :microposts,          only: [:create, :destroy]
+
+  resources :relationships,       only: [:create, :destroy]
+
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
